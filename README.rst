@@ -10,6 +10,12 @@ How-To
 
 .. code:: bash
 
+    $ python setup.py install
+
+OR
+
+.. code:: bash
+
     $ pip install linkGrabber
 
 Quick
@@ -20,6 +26,8 @@ Quick
     import linkGrabber
 
     seek = linkGrabber.ScrapeLinks("http://www.google.com")
-    print(seek.find_links())
-    print(seek.find_links(limit=5))
-    print(seek.find_links({ "href": re.compile("plus.google.com") }))
+    seek.find_links()
+    # limit the number of "a" tags to 5
+    seek.find_links(limit=5)
+    # filter the "a" tag href attribute
+    seek.find_links({ "href": re.compile("plus.google.com") })
