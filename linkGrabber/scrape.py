@@ -25,7 +25,7 @@ class ScrapeLinks:
     def find_links(self, filters=None, limit=None):
         if not isinstance(filters, dict) and filters is not None:
             raise Exception("filters parameter must be a dictionary")
-        if not isinstance(limit, int):
+        if not isinstance(limit, int) and limit is not None:
             raise Exception("limit parameter must be an integer")
         links = []
         if filters is not None:
