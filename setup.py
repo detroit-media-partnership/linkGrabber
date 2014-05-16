@@ -8,7 +8,7 @@ setup(
     version='0.1.0',
     author='Eric Bower',
     author_email='neurosnap@gmail.com',
-    packages=['linkGrabber', 'linkGrabber.test'],
+    packages=['linkGrabber', 'linkGrabber.tests'],
     scripts=[],
     url='http://pypi.python.org/pypi/linkGrabber',
     license='LICENSE.rst',

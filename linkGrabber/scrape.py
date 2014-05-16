@@ -8,15 +8,14 @@ class ScrapeLinks:
     """Grabs links from a web page
     based upon a URL, filters, and limits"""
     def __init__(self, href):
+        if 'http://' not in href and 'https://' not in href:
+            raise Exception("URL must contain http:// or https://")
         self._href = href
-        self._links = []
         self._soup = None
+        self._get_page()
 
     def __repr__(self):
         return "<ScrapeLinks %r>" % self._href
-
-    def _add_link(self, text, href, seo):
-        self._links.append(Links(text, href, seo))
 
     def _get_page(self):
         page = urllib2.urlopen(self._href)
@@ -24,8 +23,11 @@ class ScrapeLinks:
         return self._soup
 
     def find_links(self, filters=None, limit=None):
-        if self._soup is None:
-            self._get_page()
+        if not isinstance(filters, dict) and filters is not None:
+            raise Exception("filters parameter must be a dictionary")
+        if not isinstance(limit, int):
+            raise Exception("limit parameter must be an integer")
+        links = []
         if filters is not None:
             search = self._soup.findAll('a', **filters)
         else:
@@ -40,11 +42,7 @@ class ScrapeLinks:
                 link_text = anchor.string
             except:
                 link_text = link_seo
-            self._add_link(link_text, link_href, link_seo)
-            if limit is not None and len(self._links) >= limit:
+            links.append(Links(link_text, link_href, link_seo))
+            if limit is not None and len(links) >= limit:
                 break
-        return self._links
-
-if __name__ == '__main__':
-    seek = ScrapeLinks("http://www.freep.com/section/NLETTER10")
-    print(seek.find_links({ "href": re.compile("www.freep.com/article"), "style": re.compile("11px") }, 5))
+        return links
