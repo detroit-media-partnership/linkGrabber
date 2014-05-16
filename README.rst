@@ -18,6 +18,7 @@ pypi_
 .. _pypi: https://pypi.python.org/pypi/linkGrabber/
 
 Dependecies:
+
 *  BeautifulSoup
 
 How-To
