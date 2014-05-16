@@ -38,10 +38,10 @@ class ScrapeLinks:
             link_seo = anchor['href'][last_slash+1:] \
                         .replace('-', ' ') \
                         .replace('  ', ' ')
-            try:
-                link_text = anchor.string
-            except:
+            if anchor.string is None:
                 link_text = link_seo
+            else:
+                link_text = anchor.string
             links.append(Links(link_text, link_href, link_seo))
             if limit is not None and len(links) >= limit:
                 break

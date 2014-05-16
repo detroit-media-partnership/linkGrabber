@@ -5,6 +5,8 @@ Link Grabber
 Link Grabber provides a quick and easy way to grab links from
 a single web page.
 
+[pypi](https://pypi.python.org/pypi/linkGrabber/)
+
 How-To
 ======
 
