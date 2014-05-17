@@ -15,6 +15,6 @@ setup(
     description='Scrape links from a single web site',
     long_description=open('README.rst').read(),
     install_requires=[
-        "BeautifulSoup"
+        "beautifulsoup4"
     ],
 )

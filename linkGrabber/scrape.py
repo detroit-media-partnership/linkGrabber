@@ -1,6 +1,9 @@
 from __future__ import print_function
-import urllib2
-from BeautifulSoup import BeautifulSoup
+try:
+	from urllib.request import urlopen
+except:
+	from urllib2 import urlopen
+from bs4 import BeautifulSoup
 from .links import Links
 
 class ScrapeLinks(object):
@@ -17,7 +20,7 @@ class ScrapeLinks(object):
         return "<ScrapeLinks {0}>".format(self._href)
 
     def _get_page(self):
-        page = urllib2.urlopen(self._href)
+        page = urlopen(self._href)
         self._soup = BeautifulSoup(page)
         return self._soup
 
@@ -37,8 +40,9 @@ class ScrapeLinks(object):
         if sort is not None:
             search = sorted(search, key=sort, reverse=sort_reverse)
 
-        if sort_reverse is not None and sort is None:
-            search = sorted(search, reverse=sort_reverse)
+        if sort_reverse and sort is None:
+	    #search = sorted(search, reverse=sort_reverse)
+            search.reverse()
 
         links = []
         for anchor in search:
