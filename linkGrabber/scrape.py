@@ -7,14 +7,14 @@ class ScrapeLinks:
     """Grabs links from a web page
     based upon a URL, filters, and limits"""
     def __init__(self, href):
-        if 'http://' not in href and 'https://' not in href:
+        if not href.startswith('http'):
             raise Exception("URL must contain http:// or https://")
         self._href = href
         self._soup = None
         self._get_page()
 
     def __repr__(self):
-        return "<ScrapeLinks %r>" % self._href
+        return "<ScrapeLinks {0}>".format(self._href)
 
     def _get_page(self):
         page = urllib2.urlopen(self._href)
