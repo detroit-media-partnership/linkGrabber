@@ -98,7 +98,6 @@ Links class
 -----------
 
 Currently only three properties exist: 
-
  *  text (text inbetween the <a></a> tag)
  *  href (href attribute, aka the hyperlink)
  *  seo (parse all text after last "/" in URL and make it human readable)
