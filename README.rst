@@ -54,7 +54,7 @@ Quickie
 Documentation
 =============
 
-find_links
+find
 ----------
 
 Parameters: 
