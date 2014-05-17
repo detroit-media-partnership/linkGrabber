@@ -21,12 +21,12 @@ class ScrapeLinks:
         self._soup = BeautifulSoup(page)
         return self._soup
 
-    def find_links(self, filters=None, limit=None, limit_reverse=False, limit_sort=None):
+    def find_links(self, filters=None, limit=None, sort_reverse=False, sort=None):
         if filters is not None and not isinstance(filters, dict):
             raise Exception("filters parameter must be a dictionary")
         if limit is not None and not isinstance(limit, int):
             raise Exception("limit parameter must be an integer")
-        if limit_sort is not None and not hasattr(limit_sort, "__call__"):
+        if sort is not None and not hasattr(sort, "__call__"):
             raise Exception("sort parameter must be a function")
 
         if filters is not None:
@@ -34,11 +34,11 @@ class ScrapeLinks:
         else:
             search = self._soup.findAll('a')
 
-        if limit_sort is not None:
-            search = sorted(search, key=limit_sort, reverse=limit_reverse)
+        if sort is not None:
+            search = sorted(search, key=sort, reverse=sort_reverse)
 
-        if limit_reverse is not None and limit_sort is None:
-            search = sorted(search, reverse=limit_reverse)
+        if sort_reverse is not None and sort is None:
+            search = sorted(search, reverse=sort_reverse)
 
         links = []
         for anchor in search:

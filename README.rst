@@ -81,7 +81,7 @@ Reverse the sort before limiting links:
     from linkGrabber import ScrapeLinks
 
     seek = ScrapeLinks("http://www.google.com")
-    seek.find_links(limit=2, limit_reverse=True)
+    seek.find_links(limit=2, sort_reverse=True)
 
 Sort by Links property:
 
@@ -90,7 +90,7 @@ Sort by Links property:
     from linkGrabber import ScrapeLinks
 
     seek = ScrapeLinks("http://www.google.com")
-    seek.find_link(limit=3, limit_sort=lambda key: key.text)
+    seek.find_link(limit=3, sort=lambda key: key.text)
 
 Links class
 -----------

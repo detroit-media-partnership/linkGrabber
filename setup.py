@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name='linkGrabber',
-    version='0.1.7',
+    version='0.1.8',
     author='Eric Bower',
     author_email='neurosnap@gmail.com',
     packages=['linkGrabber', 'linkGrabber.tests'],
