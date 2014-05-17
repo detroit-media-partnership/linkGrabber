@@ -1,5 +1,4 @@
 from __future__ import print_function
-import re
 import urllib2
 from BeautifulSoup import BeautifulSoup
 from .links import Links
