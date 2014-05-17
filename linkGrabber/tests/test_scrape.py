@@ -1,8 +1,7 @@
 """ Unit test ScrapeLinks functionality"""
-from __future__ import print_function
 import unittest
 import bs4
-from linkGrabber import ScrapeLinks
+from linkGrabber import Links
 
 class TestScrape(unittest.TestCase):
     """ A set of unit tests for ScrapeLinks """
@@ -13,21 +12,20 @@ class TestScrape(unittest.TestCase):
 
     def test_url(self):
         """ Validate URL on instance instantiation """
-        self.assertRaises(Exception, ScrapeLinks, self.bad_url)
+        self.assertRaises(Exception, Links, self.bad_url)
 
-    def test_grab_page(self):
+    def test_page(self):
         """ Getting the web page yields correct response"""
-        seek = ScrapeLinks(self.url)
-        self.assertIsInstance(seek._get_page(), bs4.BeautifulSoup)
+        seek = Links(self.url)
+        self.assertIsInstance(seek._page(), bs4.BeautifulSoup)
 
-    def test_find_links(self):
+    def test_find(self):
         """ Test how grabbing the hyperlinks are aggregated """
-        seek = ScrapeLinks(self.url)
-        self.assertRaises(Exception, seek.find_links, limit="hi")
-        self.assertRaises(Exception, seek.find_links, filters=['href', 'style'])
-        self.assertRaises(Exception, seek.find_links, filters=25)
-        self.assertEqual(len(seek.find_links(limit=5)), 5)
-        self.assertEqual(len(seek.find_links(limit=1)), 1)
+        seek = Links(self.url) 
+        self.assertRaises(Exception, seek.find, filters=['href', 'style'])
+        self.assertRaises(Exception, seek.find, filters=25)
+        self.assertEqual(len(seek.find(limit=5)), 5)
+        self.assertEqual(len(seek.find(limit=1)), 1)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

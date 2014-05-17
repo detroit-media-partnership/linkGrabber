@@ -4,47 +4,39 @@ try:
 except:
     from urllib2 import urlopen
 from bs4 import BeautifulSoup
-from .links import Links
 
-class ScrapeLinks(object):
+class Links(object):
     """Grabs links from a web page
     based upon a URL, filters, and limits"""
     def __init__(self, href):
         if not href.startswith('http'):
             raise Exception("URL must contain http:// or https://")
-        self._href = href
+        self._href = href 
         self._soup = None
-        self._get_page()
+        self._page()
 
     def __repr__(self):
-        return "<ScrapeLinks {0}>".format(self._href)
+        return "<Links {0}>".format(self._href)
 
-    def _get_page(self):
+    def _page(self):
         """ Stores page content as a BeautifulSoup object"""
         page = urlopen(self._href)
         self._soup = BeautifulSoup(page)
         return self._soup
 
-    def find_links(self, filters=None, limit=None,
-            sort_reverse=False, sort=None):
+    def find(self, filters=None, limit=None,
+            reverse=False, sort=None):
         """ Using filters and sorts, this finds all hyperlinks
         on a web page """
-        if filters is not None and not isinstance(filters, dict):
-            raise Exception("filters parameter must be a dictionary")
-        if limit is not None and not isinstance(limit, int):
-            raise Exception("limit parameter must be an integer")
-        if sort is not None and not hasattr(sort, "__call__"):
-            raise Exception("sort parameter must be a function")
-
         if filters is not None:
             search = self._soup.findAll('a', **filters)
         else:
-            search = self._soup.findAll('a')
-
+            search = self._soup.findAll('a') 
+        
         if sort is not None:
-            search = sorted(search, key=sort, reverse=sort_reverse)
-
-        if sort_reverse and sort is None:
+            search = sorted(search, key=sort, reverse=reverse)
+           
+        if reverse and sort is None:
             search.reverse()
 
         links = []
@@ -58,7 +50,8 @@ class ScrapeLinks(object):
                 link_text = link_seo
             else:
                 link_text = anchor.string
-            links.append(Links(link_text, link_href, link_seo))
+            links.append({ "text": link_text, "href": link_href, "seo": link_seo })
             if limit is not None and len(links) >= limit:
                 break
+
         return links

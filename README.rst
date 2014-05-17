@@ -44,12 +44,12 @@ Quickie
     import re
     import linkGrabber
 
-    seek = linkGrabber.ScrapeLinks("http://www.google.com")
-    seek.find_links()
+    seek = linkGrabber.Links("http://www.google.com")
+    seek.find()
     # limit the number of "a" tags to 5
-    seek.find_links(limit=5)
+    seek.find(limit=5)
     # filter the "a" tag href attribute
-    seek.find_links({ "href": re.compile("plus.google.com") })
+    seek.find({ "href": re.compile("plus.google.com") })
 
 Documentation
 =============
@@ -58,10 +58,10 @@ find_links
 ----------
 
 Parameters: 
- *  filters: Beautiful Soup's filters as a dictionary
- *  limit:  Limit the number of links in sequential order
- *  limit_reverse: Reverses how the list of <a> tags are sorted
- *  limit_sort:  Accepts a function that accepts which key to sort upon
+ *  filters (dict): Beautiful Soup's filters as a dictionary
+ *  limit (int):  Limit the number of links in sequential order
+ *  reverse (bool): Reverses how the list of <a> tags are sorted
+ *  sort (function):  Accepts a function that accepts which key to sort upon
     within the List class
 
 Find all links that have a style containing "11px"
@@ -69,31 +69,31 @@ Find all links that have a style containing "11px"
 .. code:: python
 
     import re
-    from linkGrabber import ScrapeLinks
+    from linkGrabber import Links
 
-    seek = ScrapeLinks("http://www.google.com")
-    seek.find_links({ "style": re.compile("11px")  }, 5)
+    seek = Links("http://www.google.com")
+    seek.find({ "style": re.compile("11px")  }, 5)
 
 Reverse the sort before limiting links:
 
 .. code:: python
 
-    from linkGrabber import ScrapeLinks
+    from linkGrabber import Links
 
-    seek = ScrapeLinks("http://www.google.com")
-    seek.find_links(limit=2, sort_reverse=True)
+    seek = Links("http://www.google.com")
+    seek.find(limit=2, reverse=True)
 
 Sort by Links property:
 
 .. code:: python
 
-    from linkGrabber import ScrapeLinks
+    from linkGrabber import Links
 
-    seek = ScrapeLinks("http://www.google.com")
-    seek.find_link(limit=3, sort=lambda key: key.text)
+    seek = Links("http://www.google.com")
+    seek.find(limit=3, sort=lambda key: key.text)
 
-Links class
------------
+Link Dictionary
+---------------
 
 Currently only three properties exist: 
  *  text (text inbetween the <a></a> tag)
