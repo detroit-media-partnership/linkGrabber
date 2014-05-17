@@ -94,4 +94,11 @@ Sort by Links property:
     seek = ScrapeLinks("http://www.google.com")
     seek.find_link(limit=3, limit_sort=lambda key: key.text)
 
+Links class
+-----------
 
+Currently only three properties exist: 
+
+ *  text (text inbetween the <a></a> tag)
+ *  href (href attribute, aka the hyperlink)
+ *  seo (parse all text after last "/" in URL and make it human readable)
