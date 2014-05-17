@@ -1,8 +1,8 @@
-from __future__ import print_function
+""" Module that scrapes a web page for hyperlinks """
 try:
-	from urllib.request import urlopen
+    from urllib.request import urlopen
 except:
-	from urllib2 import urlopen
+    from urllib2 import urlopen
 from bs4 import BeautifulSoup
 from .links import Links
 
@@ -20,11 +20,15 @@ class ScrapeLinks(object):
         return "<ScrapeLinks {0}>".format(self._href)
 
     def _get_page(self):
+        """ Stores page content as a BeautifulSoup object"""
         page = urlopen(self._href)
         self._soup = BeautifulSoup(page)
         return self._soup
 
-    def find_links(self, filters=None, limit=None, sort_reverse=False, sort=None):
+    def find_links(self, filters=None, limit=None,
+            sort_reverse=False, sort=None):
+        """ Using filters and sorts, this finds all hyperlinks
+        on a web page """
         if filters is not None and not isinstance(filters, dict):
             raise Exception("filters parameter must be a dictionary")
         if limit is not None and not isinstance(limit, int):
@@ -41,7 +45,6 @@ class ScrapeLinks(object):
             search = sorted(search, key=sort, reverse=sort_reverse)
 
         if sort_reverse and sort is None:
-	    #search = sorted(search, reverse=sort_reverse)
             search.reverse()
 
         links = []

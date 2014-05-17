@@ -1,5 +1,7 @@
+""" Module that defines the Links class """
 class Links(object):
-    """Object that will hold link data"""
+    """ Stores data related to a hyperlink that
+    gets scraped by ScrapeLinks """
     def __init__(self, text, href, seo):
         self.text = text.encode('utf-8')
         self.href = href.encode('utf-8')
