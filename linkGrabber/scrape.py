@@ -35,8 +35,6 @@ class ScrapeLinks:
         else:
             search = self._soup.findAll('a')
 
-        #print(search)
-
         if limit_sort is not None:
             search = sorted(search, key=limit_sort, reverse=limit_reverse)
 
