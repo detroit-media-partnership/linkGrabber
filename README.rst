@@ -58,6 +58,9 @@ find_links
 Parameters: 
  *  filters: Beautiful Soup's filters as a dictionary
  *  limit:  Limit the number of links in sequential order
+ *  limit_reverse: Reverses how the list of <a> tags are sorted
+ *  limit_sort:  Accepts a function that accepts which key to sort upon
+    within the List class
 
 .. code:: python
 

@@ -1,1 +1,2 @@
 v0.1.0, 05/16/2014 -- Initial release.
+v0.1.5, 05/16/2014 -- Updated find_links to accept link_reverse=(bool) and link_sort=(function)
