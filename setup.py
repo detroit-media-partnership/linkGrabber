@@ -10,7 +10,7 @@ setup(
     author_email='neurosnap@gmail.com',
     packages=['linkGrabber', 'linkGrabber.tests'],
     scripts=[],
-    url='http://pypi.python.org/pypi/linkGrabber',
+    url='https://github.com/detroit-media-partnership/linkGrabber',
     license='LICENSE.rst',
     description='Scrape links from a single web site',
     long_description=open('README.rst').read(),
