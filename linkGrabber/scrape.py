@@ -3,7 +3,7 @@ import urllib2
 from BeautifulSoup import BeautifulSoup
 from .links import Links
 
-class ScrapeLinks:
+class ScrapeLinks(object):
     """Grabs links from a web page
     based upon a URL, filters, and limits"""
     def __init__(self, href):
