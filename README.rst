@@ -17,6 +17,10 @@ pypi_
 
 .. _pypi: https://pypi.python.org/pypi/linkGrabber/
 
+GitHub_
+
+.. _GitHub: https://github.com/detroit-media-partnership/link-grabber
+
 Dependecies:
 
 *  BeautifulSoup
@@ -62,11 +66,29 @@ Parameters:
  *  limit_sort:  Accepts a function that accepts which key to sort upon
     within the List class
 
+Find all links that have a style containing "11px"
 .. code:: python
 
     import re
     from linkGrabber import ScrapeLinks
 
-    seek = linkGrabber.ScrapeLinks("http://www.google.com")
+    seek = ScrapeLinks("http://www.google.com")
     seek.find_links({ "style": re.compile("11px")  }, 5)
+
+Reverse the sort before limiting links:
+.. code:: python
+
+    from linkGrabber import ScrapeLinks
+
+    seek = ScrapeLinks("http://www.google.com")
+    seek.find_links(limit=2, limit_reverse=True)
+
+Sort by Links property:
+.. code:: python
+
+    from linkGrabber import ScrapeLinks
+
+    seek = ScrapeLinks("http://www.google.com")
+    seek.find_link(limit=3, limit_sort=lambda key: key.text)
+
 
