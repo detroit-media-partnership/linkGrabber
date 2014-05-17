@@ -21,7 +21,7 @@ class TestScrape(unittest.TestCase):
 
     def test_find(self):
         """ Test how grabbing the hyperlinks are aggregated """
-        seek = Links(self.url) 
+        seek = Links(self.url)
         self.assertRaises(Exception, seek.find, filters=['href', 'style'])
         self.assertRaises(Exception, seek.find, filters=25)
         self.assertEqual(len(seek.find(limit=5)), 5)

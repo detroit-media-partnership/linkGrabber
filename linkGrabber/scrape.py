@@ -11,7 +11,7 @@ class Links(object):
     def __init__(self, href):
         if not href.startswith('http'):
             raise Exception("URL must contain http:// or https://")
-        self._href = href 
+        self._href = href
         self._soup = None
         self._page()
 
@@ -31,11 +31,11 @@ class Links(object):
         if filters is not None:
             search = self._soup.findAll('a', **filters)
         else:
-            search = self._soup.findAll('a') 
-        
+            search = self._soup.findAll('a')
+
         if sort is not None:
             search = sorted(search, key=sort, reverse=reverse)
-           
+
         if reverse and sort is None:
             search.reverse()
 
@@ -50,7 +50,11 @@ class Links(object):
                 link_text = link_seo
             else:
                 link_text = anchor.string
-            links.append({ "text": link_text, "href": link_href, "seo": link_seo })
+            links.append({
+                "text": link_text,
+                "href": link_href,
+                "seo": link_seo
+            })
             if limit is not None and len(links) >= limit:
                 break
 
