@@ -6,7 +6,7 @@ class Links(object):
         self.seo = seo
 
     def __repr__(self):
-        return "<Links text={0}, href={1}>" % (self.text, self.href)
+        return "<Links text={0}, href={1}>".format(self.text, self.href)
 
     def __str__(self):
         return str(self.__repr__)
