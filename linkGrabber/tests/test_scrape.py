@@ -1,6 +1,6 @@
 from __future__ import print_function
 import unittest
-import BeautifulSoup
+import bs4
 from linkGrabber import ScrapeLinks
 
 class TestScrape(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestScrape(unittest.TestCase):
 
     def test_grab_page(self):
         seek = ScrapeLinks(self.url)
-        self.assertIsInstance(seek._get_page(), BeautifulSoup.BeautifulSoup)
+        self.assertIsInstance(seek._get_page(), bs4.BeautifulSoup)
 
     def test_find_links(self):
         seek = ScrapeLinks(self.url)
