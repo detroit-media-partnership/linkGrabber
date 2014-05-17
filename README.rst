@@ -67,6 +67,7 @@ Parameters:
     within the List class
 
 Find all links that have a style containing "11px"
+
 .. code:: python
 
     import re
@@ -76,6 +77,7 @@ Find all links that have a style containing "11px"
     seek.find_links({ "style": re.compile("11px")  }, 5)
 
 Reverse the sort before limiting links:
+
 .. code:: python
 
     from linkGrabber import ScrapeLinks
@@ -84,6 +86,7 @@ Reverse the sort before limiting links:
     seek.find_links(limit=2, limit_reverse=True)
 
 Sort by Links property:
+
 .. code:: python
 
     from linkGrabber import ScrapeLinks
