@@ -10,7 +10,7 @@ class Links(object):
     def __init__(self, href=None, text=None):
         if href is not None and not href.startswith('http'):
             raise ValueError("URL must contain http:// or https://")
-        elif href is None:
+        elif href is not None:
             self._href = href
             page = requests.get(self._href)
             self._text = page.text
@@ -39,15 +39,19 @@ class Links(object):
 
         links = []
         for anchor in search:
-            link_href = anchor['href']
-            link_seo = seoify_hyperlink(anchor['href'])
-            link_text = anchor.string or link_seo
+            build_link = { "html": anchor }
+            try:
+                build_link['href'] = anchor['href']
+                build_link['seo'] = seoify_hyperlink(anchor['href'])
+            except KeyError:
+                pass
 
-            links.append({
-                "text": link_text,
-                "href": link_href,
-                "seo": link_seo
-            })
+            try:
+                build_link['text'] = anchor.string or build_link['seo']
+            except KeyError:
+                pass
+
+            links.append(build_link)
             
             if limit is not None and len(links) == limit:
                 break

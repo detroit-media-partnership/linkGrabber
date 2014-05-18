@@ -14,11 +14,16 @@ class TestScrape(unittest.TestCase):
         self.bad_url = "www.google.com"
         # grab some example html pages to test
         base_dir = os.path.dirname(os.path.realpath(__file__))
-        pages = ["google.html", "freep.html"]
-        self.page_texts = []
-        for page in pages:
-            with open(os.path.join(base_dir, 'pages', page)) as fp:
-                self.page_texts.append(fp.readlines())
+        self.pages = [{
+            "file": "google.html", 
+            "num_links": 49
+        }, {
+            "file": "freep.html", 
+            "num_links": 151
+        }]
+        for i, page in enumerate(self.pages):
+            with open(os.path.join(base_dir, 'pages', page['file'])) as fp:
+                self.pages[i]['text'] = fp.read()
 
     def test_url(self):
         """ Validate URL on instance instantiation """
@@ -44,6 +49,9 @@ class TestScrape(unittest.TestCase):
     def test_find_number_of_links(self):
         """ Ensure expected number of links 
         reflects actual number of links """
+        for page in self.pages:
+            seek = Links(text=page['text'])
+            self.assertEqual(len(seek.find()), page['num_links'])
 
     def test_find_reverse_sort(self):
         """ Ensure reverse sort does what it 
