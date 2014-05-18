@@ -1,7 +1,10 @@
 """ Unit test ScrapeLinks functionality"""
+import os.path
 import unittest
 import bs4
+
 from linkGrabber import Links
+
 
 class TestScrape(unittest.TestCase):
     """ A set of unit tests for ScrapeLinks """
@@ -14,29 +17,22 @@ class TestScrape(unittest.TestCase):
         """ Validate URL on instance instantiation """
         self.assertRaises(Exception, Links, self.bad_url)
 
-    def test_page(self):
+    def test_soup_property(self):
         """ Getting the web page yields correct response"""
         seek = Links(self.url)
-        self.assertIsInstance(seek._page(), bs4.BeautifulSoup)
+        self.assertIsInstance(seek._soup, bs4.BeautifulSoup)
 
-    def test_find(self):
-        """ Test how grabbing the hyperlinks are aggregated """
+    def test_find_bad_filter_param(self):
+        """ Bad filter param inputs """
         seek = Links(self.url)
-        # Each of these assertions should have their own test method.
-        self.assertRaises(Exception, seek.find, filters=['href', 'style'])
-        # ex: "test_find_hyperlink_bad_filter_param"
         self.assertRaises(Exception, seek.find, filters=25)
+        self.assertRaises(Exception, seek.find, filters=['href', 'style'])
+
+    def test_find_limit_param(self):
+        """ How does find() handle the limit property """
+        seek = Links(self.url)
         self.assertEqual(len(seek.find(limit=5)), 5)
         self.assertEqual(len(seek.find(limit=1)), 1)
 
 if __name__ == '__main__':
-    # You should instead gain experience with a test runner.
-    # They will discover your unit tests, and run them.
-    # py.test, the latest-and-greatest
-    # http://pytest.org/latest/
-    # Nose, very popular
-    # https://nose.readthedocs.org/en/latest/
-    # Also consider tox, if you want to run your tests
-    # on both py2 and 3 (which I think you do, judging by scrape.py):
-    # http://tox.readthedocs.org/en/latest/
     unittest.main(verbosity=2)
