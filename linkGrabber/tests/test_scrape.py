@@ -4,7 +4,7 @@ import unittest
 import bs4
 
 from linkGrabber import Links
-
+import test_data as td
 
 class TestScrape(unittest.TestCase):
     """ A set of unit tests for ScrapeLinks """
@@ -14,16 +14,9 @@ class TestScrape(unittest.TestCase):
         self.bad_url = "www.google.com"
         # grab some example html pages to test
         base_dir = os.path.dirname(os.path.realpath(__file__))
-        self.pages = [{
-            "file": "google.html", 
-            "num_links": 49
-        }, {
-            "file": "freep.html", 
-            "num_links": 151
-        }]
-        for i, page in enumerate(self.pages):
+        for i, page in enumerate(td.pages):
             with open(os.path.join(base_dir, 'pages', page['file'])) as fp:
-                self.pages[i]['text'] = fp.read()
+                td.pages[i]['text'] = fp.read()
 
     def test_url(self):
         """ Validate URL on instance instantiation """
@@ -49,16 +42,29 @@ class TestScrape(unittest.TestCase):
     def test_find_number_of_links(self):
         """ Ensure expected number of links 
         reflects actual number of links """
-        for page in self.pages:
+        for page in td.pages:
             seek = Links(text=page['text'])
             self.assertEqual(len(seek.find()), page['num_links'])
 
-    def test_find_reverse_sort(self):
-        """ Ensure reverse sort does what it 
-        is told"""
+    def test_find_limit(self):
+        """ Check that the actual array with a limit
+        matches the test data """
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(limit=5)
+            self.assertEqual(len(actual_list), len(page['limit_find']))
+            for i, link in enumerate(actual_list):
+                self.assertDictEqual(link, page['limit_find'][i])
 
-    def test_find_seo(self):
-        """ Ensure SEO is properly parsed """
+    def test_find_reverse_sort(self):
+        """ Ensure reverse sort does what it
+        is told"""
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(limit=5, reverse=True)
+            self.assertEqual(len(actual_list), len(page['limit_reverse_find']))
+            for i, link in enumerate(actual_list):
+                self.assertDictEqual(link, page['limit_reverse_find'][i])
 
     def test_find_sort_by_text(self):
         """ Sorting by text name produces

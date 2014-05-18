@@ -39,7 +39,9 @@ class Links(object):
 
         links = []
         for anchor in search:
-            build_link = { "html": anchor }
+            html = str(anchor)
+            #build_link = { "html": html }
+            build_link = {}
             try:
                 build_link['href'] = anchor['href']
                 build_link['seo'] = seoify_hyperlink(anchor['href'])
