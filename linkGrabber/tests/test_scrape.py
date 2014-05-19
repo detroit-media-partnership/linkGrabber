@@ -1,4 +1,4 @@
-""" Unit test ScrapeLinks functionality"""
+""" Unit test Links functionality"""
 import unittest
 import requests
 import vcr
@@ -8,7 +8,7 @@ from linkGrabber import Links
 from linkGrabber.tests import test_data as td
 
 class TestScrape(unittest.TestCase):
-    """ A set of unit tests for ScrapeLinks """
+    """ A set of unit tests for Links """
     def setUp(self):
         """ Activated on start up of class """
         self.url = "http://www.google.com"
@@ -30,7 +30,7 @@ class TestScrape(unittest.TestCase):
         self.assertIsInstance(seek._soup, bs4.BeautifulSoup)
 
     def test_find_bad_filter_param(self):
-        """ Bad filter param inputs """
+        """ Bad filters parameter inputs """
         seek = Links(self.url)
         self.assertRaises(Exception, seek.find, filters=25)
         self.assertRaises(Exception, seek.find, filters=['href', 'style'])
