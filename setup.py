@@ -17,12 +17,12 @@ setup(
     install_requires=["requests", "beautifulsoup4"],
     tests_require=['unittest', 'vcrpy'],
     classifiers=[
-        'Development Status :: Beta',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Topic :: Software Development :: Web',
-        'License :: MIT License'
+        'Topic :: Internet :: WWW/HTTP',
+        'License :: OSI Approved :: MIT License'
     ]
 )
