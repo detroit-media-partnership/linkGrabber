@@ -77,7 +77,7 @@ class TestScrape(unittest.TestCase):
         """ Sorting by href produces proper results """
         for page in td.pages:
             seek = Links(text=page['text'])
-            actual_list = seek.find(limit=5, sort=lambda key: key.href)
+            actual_list = seek.find(limit=5, sort=lambda key: key.href or "")
             self.assertEqual(len(actual_list), len(page['limit_sort_href']))
             for i, link in enumerate(actual_list):
                 self.assertDictEqual(link, page['limit_sort_href'][i])
