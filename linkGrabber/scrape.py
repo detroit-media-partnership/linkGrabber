@@ -39,12 +39,12 @@ class Links(object):
         for anchor in search:
             build_link = anchor.attrs
             try:
-                build_link['seo'] = seoify_hyperlink(anchor['href'])
+                build_link[u'seo'] = seoify_hyperlink(anchor['href'])
             except KeyError:
                 pass
 
             try:
-                build_link['text'] = anchor.string or build_link['seo']
+                build_link[u'text'] = anchor.string or build_link['seo']
             except KeyError:
                 pass
 
