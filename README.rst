@@ -97,6 +97,7 @@ Link Dictionary
 ---------------
 
 All attrs from BeautifulSoup's Tag object are available in the dictionary
-as well as a few extras: 
+as well as a few extras:
+
 *  text (text inbetween the <a></a> tag)
 *  seo (parse all text after last "/" in URL and attempt to make it human readable)
