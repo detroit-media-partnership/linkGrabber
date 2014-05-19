@@ -14,10 +14,7 @@ setup(
     license='LICENSE.rst',
     description='Scrape links from a single web site',
     long_description=open('README.rst').read(),
-    install_requires=[
-        "requests",
-        "beautifulsoup4"
-    ],
+    install_requires=["requests", "beautifulsoup4"],
     tests_require=['unittest', 'vcrpy'],
     classifiers=[
         'Development Status :: Beta',

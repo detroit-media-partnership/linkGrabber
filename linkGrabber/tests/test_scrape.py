@@ -5,7 +5,7 @@ import vcr
 import bs4
 
 from linkGrabber import Links
-import test_data as td
+from linkGrabber.tests import test_data as td
 
 class TestScrape(unittest.TestCase):
     """ A set of unit tests for ScrapeLinks """
