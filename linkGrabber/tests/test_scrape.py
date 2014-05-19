@@ -40,15 +40,14 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(len(seek.find(limit=1)), 1)
 
     def test_find_number_of_links(self):
-        """ Ensure expected number of links 
+        """ Ensure expected number of links
         reflects actual number of links """
         for page in td.pages:
             seek = Links(text=page['text'])
             self.assertEqual(len(seek.find()), page['num_links'])
 
     def test_find_limit(self):
-        """ Check that the actual array with a limit
-        matches the test data """
+        """ Check that the actual array with a limit matches the test data """
         for page in td.pages:
             seek = Links(text=page['text'])
             actual_list = seek.find(limit=5)
@@ -57,8 +56,7 @@ class TestScrape(unittest.TestCase):
                 self.assertDictEqual(link, page['limit_find'][i])
 
     def test_find_reverse_sort(self):
-        """ Ensure reverse sort does what it
-        is told"""
+        """ Ensure reverse sort does what it is told"""
         for page in td.pages:
             seek = Links(text=page['text'])
             actual_list = seek.find(limit=5, reverse=True)
@@ -67,12 +65,22 @@ class TestScrape(unittest.TestCase):
                 self.assertDictEqual(link, page['limit_reverse_find'][i])
 
     def test_find_sort_by_text(self):
-        """ Sorting by text name produces
-        proper results """
+        """ Sorting by text name produces proper results """
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(limit=5, sort=lambda key: key.text)
+            self.assertEqual(len(actual_list), len(page['limit_sort_text']))
+            for i, link in enumerate(actual_list):
+                self.assertDictEqual(link, page['limit_sort_text'][i])
 
     def test_find_sort_by_href(self):
-        """ Sorting by href produces
-        proper results """
+        """ Sorting by href produces proper results """
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(limit=5, sort=lambda key: key.href)
+            self.assertEqual(len(actual_list), len(page['limit_sort_href']))
+            for i, link in enumerate(actual_list):
+                self.assertDictEqual(link, page['limit_sort_href'][i])
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

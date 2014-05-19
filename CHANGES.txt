@@ -5,3 +5,4 @@ v0.1.7, 05/16/2014 -- Update README
 v0.1.8, 05/16/2014 -- Changed paramerter names to better reflect functionality
 v0.1.9, 05/17/2014 -- Python 3.4 compatability
 v0.2.0, 05/17/2014 -- Modified naming convention, reduced codebase, more readable structure
+v0.2.1, 05/18/2014 -- Added more tests
