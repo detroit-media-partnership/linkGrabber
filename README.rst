@@ -22,6 +22,7 @@ GitHub_
 Dependecies:
 
 *  BeautifulSoup
+*  Requests
 
 How-To
 ======
