@@ -32,18 +32,13 @@ class Links(object):
             filters = {}
         search = self._soup.findAll('a', **filters)
 
-        if sort is not None:
-            search = sorted(search, key=sort, reverse=reverse)
-        elif reverse:
+        if reverse:
             search.reverse()
 
         links = []
         for anchor in search:
-            html = str(anchor)
-            #build_link = { "html": html }
-            build_link = {}
+            build_link = anchor.attrs
             try:
-                build_link['href'] = anchor['href']
                 build_link['seo'] = seoify_hyperlink(anchor['href'])
             except KeyError:
                 pass
@@ -54,9 +49,12 @@ class Links(object):
                 pass
 
             links.append(build_link)
-            
+
             if limit is not None and len(links) == limit:
                 break
+
+        if sort is not None:
+            links = sorted(links, key=sort, reverse=reverse)
 
         return links
 

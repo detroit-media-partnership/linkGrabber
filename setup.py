@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name='linkGrabber',
-    version='0.2.1',
+    version='0.2.2',
     author='Eric Bower',
     author_email='neurosnap@gmail.com',
     packages=['linkGrabber', 'linkGrabber.tests'],
@@ -18,4 +18,14 @@ setup(
         "requests",
         "beautifulsoup4"
     ],
+    tests_require=['unittest', 'vcrpy'],
+    classifiers=[
+        'Development Status :: Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Web',
+        'License :: MIT License'
+    ]
 )

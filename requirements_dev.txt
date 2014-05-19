@@ -1,0 +1,7 @@
+PyYAML==3.11
+beautifulsoup4==4.3.2
+contextdecorator==0.10.0
+linkGrabber==0.2.2
+requests==2.3.0
+six==1.6.1
+vcrpy==1.0.2

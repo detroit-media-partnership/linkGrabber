@@ -84,19 +84,21 @@ Reverse the sort before limiting links:
     seek = Links("http://www.google.com")
     seek.find(limit=2, reverse=True)
 
-Sort by Links property:
+Sort by a link's  attribute:
 
 .. code:: python
 
     from linkGrabber import Links
 
     seek = Links("http://www.google.com")
-    seek.find(limit=3, sort=lambda key: key.text)
+    seek.find(limit=3, sort=lambda key: key['text'])
 
 Link Dictionary
 ---------------
 
+All attrs from BeautifulSoup's Tag object are available in the dictionary
+as well as a few extras:
 Currently only three properties exist: 
  *  text (text inbetween the <a></a> tag)
- *  href (href attribute, aka the hyperlink)
- *  seo (parse all text after last "/" in URL and make it human readable)
+ *  seo (parse all text after last "/" in URL 
+    and attempt to make it human readable)
