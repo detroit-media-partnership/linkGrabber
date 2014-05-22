@@ -7,3 +7,4 @@ v0.1.9, 05/17/2014 -- Python 3.4 compatability
 v0.2.0, 05/17/2014 -- Modified naming convention, reduced codebase, more readable structure
 v0.2.1, 05/18/2014 -- Added more tests
 v0.2.2, 05/19/2014 -- linkGrabber.Links.find() now responds with all Tag.attrs from BeautifulSoup4 as well as 'text' and 'seo' keys
+v0.2.3, 05/22/2014 -- Updated setup py file and some verbage

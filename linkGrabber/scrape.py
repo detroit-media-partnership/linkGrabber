@@ -25,7 +25,7 @@ class Links(object):
         return "<Links {0}>".format(self._href or self._text[:15] + '...')
 
     def find(self, filters=None, limit=None,
-            reverse=False, sort=None):
+            reverse=False, sort=None, exclude=None):
         """ Using filters and sorts, this finds all hyperlinks
         on a web page """
         if filters is None:
@@ -56,6 +56,19 @@ class Links(object):
         if sort is not None:
             links = sorted(links, key=sort, reverse=reverse)
 
+        if exclude:
+            pop_elem = []
+            for key, value in exclude.iteritems():
+                for i, item in enumerate(links):
+                    print(key)
+                    if key in item:
+                        #print(value)
+                        print(item[key])
+                        #print(value.search(item[key]))
+                        if value == item[key] or value.search(item[key]):
+                            pop_elem.append(i)
+                            #links.pop(i)
+        [links.pop(i) for i, item in enumerate(pop_elem)]
         return links
 
 
