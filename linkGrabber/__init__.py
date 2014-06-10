@@ -63,7 +63,8 @@ class Links(object):
                     if key in item:
                         if value == item[key] or value.search(item[key]):
                             pop_elem.append(i)
-            [links.pop(i) for i, item in enumerate(pop_elem)]
+            for i, item in enumerate(pop_elem):
+                links.pop(i)
         return links
 
 
