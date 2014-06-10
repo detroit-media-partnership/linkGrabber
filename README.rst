@@ -4,20 +4,8 @@ Link Grabber
 
 Link Grabber provides a quick and easy way to grab links from
 a single web page.  This python package is a simple wrapper 
-around BeautifulSoup_, focusing on grabbing HTML's 
+around `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_, focusing on grabbing HTML's 
 hyperlink tag, "a." 
-
-.. _BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
-
-.. _find_all: http://www.crummy.com/software/BeautifulSoup/bs4/doc/#find-all
-
-pypi_
-
-.. _pypi: https://pypi.python.org/pypi/linkGrabber/
-
-GitHub_
-
-.. _GitHub: https://github.com/detroit-media-partnership/link-grabber
 
 Dependecies:
 
