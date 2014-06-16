@@ -33,12 +33,12 @@ Quickie
     import re
     import linkGrabber
 
-    seek = linkGrabber.Links("http://www.google.com")
-    seek.find()
+    links = linkGrabber.Links("http://www.google.com")
+    links.find()
     # limit the number of "a" tags to 5
-    seek.find(limit=5)
+    links.find(limit=5)
     # filter the "a" tag href attribute
-    seek.find({ "href": re.compile("plus.google.com") })
+    links.find(href=re.compile("plus.google.com"))
 
 Documentation
 =============
@@ -60,8 +60,8 @@ Find all links that have a style containing "11px"
     import re
     from linkGrabber import Links
 
-    seek = Links("http://www.google.com")
-    seek.find({ "style": re.compile("11px")  }, 5)
+    links = Links("http://www.google.com")
+    links.find(style=re.compile("11px"), limit=5)
 
 Reverse the sort before limiting links:
 
@@ -69,8 +69,8 @@ Reverse the sort before limiting links:
 
     from linkGrabber import Links
 
-    seek = Links("http://www.google.com")
-    seek.find(limit=2, reverse=True)
+    links = Links("http://www.google.com")
+    links.find(limit=2, reverse=True)
 
 Sort by a link's  attribute:
 
@@ -78,8 +78,8 @@ Sort by a link's  attribute:
 
     from linkGrabber import Links
 
-    seek = Links("http://www.google.com")
-    seek.find(limit=3, sort=lambda key: key['text'])
+    links = Links("http://www.google.com")
+    links.find(limit=3, sort=lambda key: key['text'])
 
 Link Dictionary
 ---------------

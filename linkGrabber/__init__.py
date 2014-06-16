@@ -3,7 +3,6 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-
 class Links(object):
     """Grabs links from a web page
     based upon a URL, filters, and limits"""
@@ -24,8 +23,8 @@ class Links(object):
     def __repr__(self):
         return "<Links {0}>".format(self._href or self._text[:15] + '...')
 
-    def find(self, filters=None, limit=None,
-            reverse=False, sort=None, exclude=None):
+    def find(self, limit=None,
+            reverse=False, sort=None, exclude=None, **filters):
         """ Using filters and sorts, this finds all hyperlinks
         on a web page """
         if filters is None:
@@ -58,12 +57,13 @@ class Links(object):
 
         if exclude:
             pop_elem = []
-            for key, value in exclude.iteritems():
-                for i, item in enumerate(links):
+            for i, item in enumerate(links):
+                for key, value in exclude.iteritems():
                     if key in item:
                         if value == item[key] or value.search(item[key]):
                             pop_elem.append(i)
             for i, item in enumerate(pop_elem):
+                print("pop it like it's hot")
                 links.pop(i)
         return links
 
