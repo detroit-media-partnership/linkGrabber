@@ -81,6 +81,15 @@ Sort by a link's  attribute:
     links = Links("http://www.google.com")
     links.find(limit=3, sort=lambda key: key['text'])
 
+Exclude text:
+
+.. code:: python
+
+    from linkGrabber import Links
+
+    links = Links("http://www.google.com")
+    links.find(exclude={ "text": re.compile("Read More") })
+
 Link Dictionary
 ---------------
 

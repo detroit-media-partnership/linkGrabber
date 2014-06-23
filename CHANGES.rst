@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v0.2.5 (06/23/2014)
+-------------------
+
+* Added exclude parameter to Links.find() which removes 
+links that match certain criteria
+
 v0.2.4 (06/10/2014)
 -------------------
 
