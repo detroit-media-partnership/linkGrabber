@@ -1,6 +1,7 @@
 """ Module that scrapes a web page for hyperlinks """
 import re
 import requests
+import collections
 import pprint
 
 from bs4 import BeautifulSoup
@@ -66,13 +67,13 @@ class Links(object):
 
             ignore_link = False
             for nixd in exclude:
-                for key, value in nixd.iteritems():
+                for key, value in iteritems(nixd):
                     if key in build_link:
-                        if hasattr(value, "search") and value.search(build_link[key]):
-                            ignore_link = True
-                            continue
-                        if value == build_link[key]:
-                            ignore_link = True
+                        if isinstance(build_link[key], collections.Iterable):
+                            for item in build_link[key]:
+                                ignore_link = exclude_match(value, item)
+                        else:
+                            ignore_link = exclude_match(value, build_link[key])
 
             if not duplicates:
                 for link in links:
@@ -94,6 +95,16 @@ class Links(object):
         else:
             return links
 
+def exclude_match(exclude, link_value):
+    """ Check excluded value against the link's current value """
+    if hasattr(exclude, "search") and exclude.search(link_value):
+        return True
+
+    if exclude == link_value:
+        return True
+
+    return False
+
 def seoify_hyperlink(hyperlink):
     """Modify a hyperlink to make it SEO-friendly by replacing
     hyphens with spaces and trimming multiple spaces.
@@ -101,3 +112,11 @@ def seoify_hyperlink(hyperlink):
     :param hyperlink: URL to attempt to grab SEO from """
     last_slash = hyperlink.rfind('/')
     return re.sub(r' +|-', ' ', hyperlink[last_slash+1:])
+
+def iteritems(d):
+    """ Factor-out Py2-to-3 differences in dictionary item
+    iterator methods """
+    try:
+         return d.iteritems()
+    except AttributeError:
+         return d.items()

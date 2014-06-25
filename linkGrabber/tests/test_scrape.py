@@ -1,6 +1,8 @@
 """ Unit test Links functionality"""
 import os.path
 import unittest
+import re
+
 import requests
 import vcr
 import bs4
@@ -82,9 +84,19 @@ class TestScrape(unittest.TestCase):
 
     def test_find_exclude(self):
         """ Determine if excluding links removes the links """
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(exclude=[{"class": re.compile("gb1")}])
+            self.assertEqual(len(actual_list), page['exclude_links'])
+            actual_list = seek.find(exclude=[{"class": "gb1"}])
+            self.assertEqual(len(actual_list), page['exclude_links'])
 
     def test_find_duplicates(self):
         """ Determine if removing duplicates works """
+        for page in td.pages:
+            seek = Links(text=page['text'])
+            actual_list = seek.find(duplicates=False)
+            self.assertEqual(len(actual_list), page['duplicate_links'])
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
