@@ -1,11 +1,13 @@
 """ Module that scrapes a web page for hyperlinks """
 import re
 import requests
+import pprint
+
 from bs4 import BeautifulSoup
 
 class Links(object):
     """Grabs links from a web page
-    based upon a URL, filters, and limits"""
+    based upon a URL and filters"""
     def __init__(self, href=None, text=None):
         """ Create instance of Links class
 
@@ -28,15 +30,20 @@ class Links(object):
     def __repr__(self):
         return "<Links {0}>".format(self._href or self._text[:15] + '...')
 
-    def find(self, limit=None,
-            reverse=False, sort=None, exclude=None, **filters):
+    def find(self, limit=None, reverse=False, sort=None,
+            exclude=None, duplicates=True, pretty=False, **filters):
         """ Using filters and sorts, this finds all hyperlinks
-        on a web page 
+        on a web page
 
-        :param limit: Crop results down to limit specified 
-        :param reverse: Reverse the list of links, useful for before limiting 
-        :param exclude: Remove links from list 
+        :param limit: Crop results down to limit specified
+        :param reverse: Reverse the list of links, useful for before limiting
+        :param exclude: Remove links from list
+        :param duplicates: Determines if identical URLs should be displayed
+        :param pretty: Quick and pretty formatting using pprint
         :param filters: All the links to search for """
+        if exclude is None:
+            exclude = []
+
         if filters is None:
             filters = {}
         search = self._soup.findAll('a', **filters)
@@ -57,23 +64,35 @@ class Links(object):
             except KeyError:
                 pass
 
-            links.append(build_link)
+            ignore_link = False
+            for nixd in exclude:
+                for key, value in nixd.iteritems():
+                    if key in build_link:
+                        if hasattr(value, "search") and value.search(build_link[key]):
+                            ignore_link = True
+                            continue
+                        if value == build_link[key]:
+                            ignore_link = True
+
+            if not duplicates:
+                for link in links:
+                    if link['href'] == anchor['href']:
+                        ignore_link = True
+
+            if not ignore_link:
+                links.append(build_link)
 
             if limit is not None and len(links) == limit:
                 break
 
-        if exclude:
-            pop_elem = []
-            for key, value in exclude.iteritems():
-                for item in links:
-                    if key in item and (value == item[key] or value.search(item[key])):
-                        links.remove(item)
-
         if sort is not None:
             links = sorted(links, key=sort, reverse=reverse)
 
-        return links
-
+        if pretty:
+            pp = pprint.PrettyPrinter(indent=4)
+            return pp.pprint(links)
+        else:
+            return links
 
 def seoify_hyperlink(hyperlink):
     """Modify a hyperlink to make it SEO-friendly by replacing

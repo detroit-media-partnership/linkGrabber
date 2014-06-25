@@ -85,10 +85,21 @@ Exclude text:
 
 .. code:: python
 
+    import re
+
     from linkGrabber import Links
 
     links = Links("http://www.google.com")
-    links.find(exclude={ "text": re.compile("Read More") })
+    links.find(exclude=[{ "text": re.compile("Read More") }])
+
+Remove duplicate URLs and make the output pretty:
+
+.. code:: python
+
+    from linkGrabber import Links
+
+    links = Links("http://www.google.com")
+    links.find(duplicates=False, pretty=True)
 
 Link Dictionary
 ---------------

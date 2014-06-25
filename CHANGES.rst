@@ -2,6 +2,15 @@
 Changelog
 =========
 
+v0.2.6 (06/25/2014)
+-------------------
+
+* Exclude parameter is now a list of dictionaries
+* Added pretty property
+* Added duplicates property which will remove any identical URLs
+* Added more tests
+* Added better docs
+
 v0.2.5 (06/23/2014)
 -------------------
 
