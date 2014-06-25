@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v0.2.7 (06/25/2014)
+-------------------
+
+* Fixed exclude for non-iterable strings
+
 v0.2.6 (06/25/2014)
 -------------------
 

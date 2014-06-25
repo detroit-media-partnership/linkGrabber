@@ -1,8 +1,10 @@
 """ Module that scrapes a web page for hyperlinks """
 import re
-import requests
+import types
 import collections
 import pprint
+
+import requests
 
 from bs4 import BeautifulSoup
 
@@ -69,7 +71,8 @@ class Links(object):
             for nixd in exclude:
                 for key, value in iteritems(nixd):
                     if key in build_link:
-                        if isinstance(build_link[key], collections.Iterable):
+                        if (isinstance(build_link[key], collections.Iterable) 
+                            and not isinstance(build_link[key], types.StringTypes)):
                             for item in build_link[key]:
                                 ignore_link = exclude_match(value, item)
                         else:
