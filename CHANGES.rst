@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v0.2.8 (10/23/2014)
+-------------------
+
+* Added better documentation
+
 v0.2.7 (06/25/2014)
 -------------------
 
@@ -19,7 +24,7 @@ v0.2.6 (06/25/2014)
 v0.2.5 (06/23/2014)
 -------------------
 
-* Added exclude parameter to Links.find() which removes 
+* Added exclude parameter to Links.find() which removes
 links that match certain criteria
 
 v0.2.4 (06/10/2014)
@@ -37,7 +42,7 @@ v0.2.3 (05/22/2014)
 v0.2.2 (05/19/2014)
 -------------------
 
-* linkGrabber.Links.find() now responds with all Tag.attrs 
+* linkGrabber.Links.find() now responds with all Tag.attrs
 from BeautifulSoup4 as well as 'text' and 'seo' keys
 
 v0.2.1 (05/18/2014)

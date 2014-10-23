@@ -2,7 +2,7 @@ Tutorial
 ========
 
 Quickie
-=======
+-------
 
 .. code:: python
 
@@ -17,12 +17,12 @@ Quickie
     links.find(href=re.compile("plus.google.com"))
 
 Documentation
-=============
+-------------
 
 find
-----------
+````
 
-Parameters: 
+Parameters:
  *  filters (dict): Beautiful Soup's filters as a dictionary
  *  limit (int):  Limit the number of links in sequential order
  *  reverse (bool): Reverses how the list of <a> tags are sorted
@@ -78,7 +78,7 @@ Remove duplicate URLs and make the output pretty:
     links.find(duplicates=False, pretty=True)
 
 Link Dictionary
----------------
+```````````````
 
 All attrs from BeautifulSoup's Tag object are available in the dictionary
 as well as a few extras:
