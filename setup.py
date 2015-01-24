@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='linkGrabber',
-    version='0.2.8',
+    version='0.2.9',
     author='Eric Bower',
     author_email='neurosnap@gmail.com',
     packages=['linkGrabber', 'linkGrabber.tests'],

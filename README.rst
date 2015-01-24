@@ -2,6 +2,8 @@
 Link Grabber
 ============
 
+`Documentation <http://linkgrabber.neurosnap.net>`_
+
 Link Grabber provides a quick and easy way to grab links from
 a single web page.  This python package is a simple wrapper
 around `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_, focusing on grabbing HTML's
@@ -43,7 +45,7 @@ Quickie
 Documentation
 -------------
 
-http://linkgrabber.neuronap.net/
+http://linkgrabber.neurosnap.net/
 
 find
 ````
