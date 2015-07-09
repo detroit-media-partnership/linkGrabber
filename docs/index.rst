@@ -6,6 +6,17 @@
 Welcome to linkGrabber's documentation!
 =======================================
 
+.. image:: https://travis-ci.org/michigan-com/linkGrabber.svg?branch=master
+    :target: https://travis-ci.org/michigan-com/linkGrabber
+
+Link Grabber provides a quick and easy way to grab links from
+a single web page.  This python package is a simple wrapper
+around `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_, focusing on grabbing HTML's
+hyperlink tag, "a."
+
+Github: https://github.com/michigan-com/linkGrabber
+Issues: https://github.com/michigan-com/linkGrabber/issues
+
 Contents:
 
 .. toctree::
