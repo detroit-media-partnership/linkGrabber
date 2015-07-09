@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v.0.3.0 (7/09/2015)
+-------------------
+
+* Added parser parameter to Links class
+* Default parser set to lxml
+
 v.0.2.10 (7/09/2015
 -------------------
 
