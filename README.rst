@@ -14,8 +14,10 @@ hyperlink tag, "a."
 
 Dependecies:
 
+*  Python 2.7, 3.3, 3.4
 *  BeautifulSoup
 *  Requests
+*  Six
 
 How-To
 ------
