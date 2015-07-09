@@ -10,16 +10,16 @@ def read(fname):
 
 setup(
     name='linkGrabber',
-    version='0.2.9',
+    version='0.2.10',
     author='Eric Bower',
     author_email='neurosnap@gmail.com',
     packages=['linkGrabber', 'linkGrabber.tests'],
     scripts=[],
-    url='https://github.com/detroit-media-partnership/linkGrabber',
+    url='https://github.com/michigan-com/linkGrabber',
     license=read('LICENSE.txt'),
     description='Scrape links from a single web page',
     long_description=read('README.rst') + '\n\n' + read('CHANGES.rst'),
-    install_requires=["requests", "beautifulsoup4"],
+    install_requires=["requests", "beautifulsoup4", "six"],
     tests_require=['nosetest', 'vcrpy'],
     classifiers=[
         'Development Status :: 4 - Beta',

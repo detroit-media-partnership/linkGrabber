@@ -1,5 +1,5 @@
 ============
-Link Grabber
+Link Grabber [![Build Status](https://travis-ci.org/michigan-com/linkGrabber.svg?branch=master)](https://travis-ci.org/michigan-com/linkGrabber)
 ============
 
 `Documentation <http://linkgrabber.neurosnap.net>`_

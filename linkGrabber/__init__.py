@@ -1,6 +1,6 @@
 """ Module that scrapes a web page for hyperlinks """
 import re
-import types
+import six
 import collections
 import pprint
 
@@ -69,10 +69,10 @@ class Links(object):
 
             ignore_link = False
             for nixd in exclude:
-                for key, value in iteritems(nixd):
+                for key, value in six.iteritems(nixd):
                     if key in build_link:
-                        if (isinstance(build_link[key], collections.Iterable) 
-                            and not isinstance(build_link[key], types.StringTypes)):
+                        if (isinstance(build_link[key], collections.Iterable)
+                            and not isinstance(build_link[key], six.string_types)):
                             for item in build_link[key]:
                                 ignore_link = exclude_match(value, item)
                         else:
@@ -116,10 +116,3 @@ def seoify_hyperlink(hyperlink):
     last_slash = hyperlink.rfind('/')
     return re.sub(r' +|-', ' ', hyperlink[last_slash+1:])
 
-def iteritems(d):
-    """ Factor-out Py2-to-3 differences in dictionary item
-    iterator methods """
-    try:
-         return d.iteritems()
-    except AttributeError:
-         return d.items()

@@ -1,16 +1,19 @@
 """ Unit test Links functionality"""
+
+import re
 import os.path
 import unittest
-import re
 
-import requests
+import six
 import vcr
 import bs4
+import requests
 
 from linkGrabber import Links
 from linkGrabber.tests import test_data as td
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+
 
 class TestScrape(unittest.TestCase):
     """ A set of unit tests for Links """
@@ -24,6 +27,12 @@ class TestScrape(unittest.TestCase):
 
         with vcr.use_cassette(os.path.join(BASE_DIR, 'fixtures', 'vcr_cassettes', 'second_test.yaml')):
             td.pages[1]['text'] = requests.get(td.pages[1]['url']).text
+
+    def assertDictSame(self, expected, actual):
+        self.assertEqual(len(list(six.iterkeys(expected))), len(list(six.iterkeys(actual))))
+        for ekey, evalue in six.iteritems(expected):
+            self.assertIn(ekey, actual)
+            self.assertEqual(evalue, actual[ekey])
 
     def test_url(self):
         """ Validate URL on instance instantiation """
@@ -53,7 +62,7 @@ class TestScrape(unittest.TestCase):
             actual_list = seek.find(limit=5)
             self.assertEqual(len(actual_list), len(page['limit_find']))
             for i, link in enumerate(actual_list):
-                self.assertDictEqual(link, page['limit_find'][i])
+                self.assertDictSame(link, page['limit_find'][i])
 
     def test_find_reverse_sort(self):
         """ Ensure reverse sort sorts before limiting the # of links """
@@ -62,7 +71,7 @@ class TestScrape(unittest.TestCase):
             actual_list = seek.find(limit=5, reverse=True)
             self.assertEqual(len(actual_list), len(page['limit_reverse_find']))
             for i, link in enumerate(actual_list):
-                self.assertDictEqual(link, page['limit_reverse_find'][i])
+                self.assertDictSame(link, page['limit_reverse_find'][i])
 
     def test_find_sort_by_text(self):
         """ Sorting by text name produces proper results """
@@ -71,7 +80,7 @@ class TestScrape(unittest.TestCase):
             actual_list = seek.find(limit=5, sort=lambda key: key['text'])
             self.assertEqual(len(actual_list), len(page['limit_sort_text']))
             for i, link in enumerate(actual_list):
-                self.assertDictEqual(link, page['limit_sort_text'][i])
+                self.assertDictSame(link, page['limit_sort_text'][i])
 
     def test_find_sort_by_href(self):
         """ Sorting by href produces proper results """
@@ -80,7 +89,7 @@ class TestScrape(unittest.TestCase):
             actual_list = seek.find(limit=5, sort=lambda key: key['href'] or "")
             self.assertEqual(len(actual_list), len(page['limit_sort_href']))
             for i, link in enumerate(actual_list):
-                self.assertDictEqual(link, page['limit_sort_href'][i])
+                self.assertDictSame(link, page['limit_sort_href'][i])
 
     def test_find_exclude(self):
         """ Determine if excluding links removes the links """
