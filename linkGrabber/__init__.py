@@ -8,33 +8,63 @@ import requests
 
 from bs4 import BeautifulSoup
 
+content_allow = ['text/plain', 'text/html']
+
+
 class Links(object):
+
     """Grabs links from a web page
     based upon a URL and filters"""
-    def __init__(self, href=None, text=None):
+
+    def __init__(self, href=None, text=None, parser='lxml'):
         """ Create instance of Links class
 
         :param href: URL to download links from
         :param text: Search through text for links instead of URL
+        :param parser: Parser for BeautifulSoup library. [default: lxml]
         """
         if href is not None and not href.startswith('http'):
             raise ValueError("URL must contain http:// or https://")
         elif href is not None:
             self._href = href
-            page = requests.get(self._href)
-            self._text = page.text
+            self._response = requests.get(self._href)
+            if self._response.status_code != 200:
+                raise ValueError('Response FAIL: %s' %
+                                 self._response.status_code)
+
+            if not hasattr(self._response, 'headers'):
+                raise ValueError('Response has not headers')
+
+            if 'content-type' not in self._response.headers:
+                raise ValueError('content-type information is not available')
+
+            self._ctype = self._response.headers['content-type'].rsplit(';')[0]
+            if self._ctype not in content_allow:
+                raise ValueError(
+                    'the content-type %s is not textable' % self._ctype)
+
+            self._text = self._response.text
+
         elif href is None and text is not None:
             self._text = text
         else:
             raise ValueError("Either href or text must not be empty")
 
-        self._soup = BeautifulSoup(self._text)
+        self._soup = BeautifulSoup(self._text, parser)
 
     def __repr__(self):
         return "<Links {0}>".format(self._href or self._text[:15] + '...')
 
+    @property
+    def text(self):
+        return self._text
+
+    @property
+    def response(self):
+        return self._response
+
     def find(self, limit=None, reverse=False, sort=None,
-            exclude=None, duplicates=True, pretty=False, **filters):
+             exclude=None, duplicates=True, pretty=False, **filters):
         """ Using filters and sorts, this finds all hyperlinks
         on a web page
 
@@ -71,8 +101,8 @@ class Links(object):
             for nixd in exclude:
                 for key, value in iteritems(nixd):
                     if key in build_link:
-                        if (isinstance(build_link[key], collections.Iterable) 
-                            and not isinstance(build_link[key], types.StringTypes)):
+                        if (isinstance(build_link[key], collections.Iterable)
+                                and not isinstance(build_link[key], types.StringTypes)):
                             for item in build_link[key]:
                                 ignore_link = exclude_match(value, item)
                         else:
@@ -98,6 +128,7 @@ class Links(object):
         else:
             return links
 
+
 def exclude_match(exclude, link_value):
     """ Check excluded value against the link's current value """
     if hasattr(exclude, "search") and exclude.search(link_value):
@@ -108,18 +139,20 @@ def exclude_match(exclude, link_value):
 
     return False
 
+
 def seoify_hyperlink(hyperlink):
     """Modify a hyperlink to make it SEO-friendly by replacing
     hyphens with spaces and trimming multiple spaces.
 
     :param hyperlink: URL to attempt to grab SEO from """
     last_slash = hyperlink.rfind('/')
-    return re.sub(r' +|-', ' ', hyperlink[last_slash+1:])
+    return re.sub(r' +|-', ' ', hyperlink[last_slash + 1:])
+
 
 def iteritems(d):
     """ Factor-out Py2-to-3 differences in dictionary item
     iterator methods """
     try:
-         return d.iteritems()
+        return d.iteritems()
     except AttributeError:
-         return d.items()
+        return d.items()
