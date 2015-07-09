@@ -4,6 +4,5 @@ dist/*
 *.pyc
 *.orig
 __pycache__
-__init__.py
 *.*~
 docs/_build/*
