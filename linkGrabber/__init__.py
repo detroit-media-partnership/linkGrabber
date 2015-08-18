@@ -1,9 +1,12 @@
 """ Module that scrapes a web page for hyperlinks """
 import re
-import types
+import sys
 import collections
 import pprint
-from urlparse import urlparse, urljoin
+try:
+    from urllib.parse import urlparse, urljoin
+except ImportError:
+    from urlparse import urlparse, urljoin
 
 import requests
 
@@ -48,6 +51,7 @@ class Links(object):
 
         elif href is None and text is not None:
             self._text = text
+            self._href = ""
         else:
             raise ValueError("Either href or text must not be empty")
 
@@ -75,7 +79,7 @@ class Links(object):
         :param exclude: Remove links from list
         :param duplicates: Determines if identical URLs should be displayed
         :param pretty: Quick and pretty formatting using pprint
-        :param all_same_root: exclude all links without root domain of it was specified. 
+        :param all_same_root: exclude all links without root domain of it was specified.
         :param join_domain: return all href with root domain joined if it starts with '/'
         :param filters: All the links to search for """
 
@@ -113,7 +117,7 @@ class Links(object):
                 for key, value in iteritems(nixd):
                     if key in build_link:
                         if (isinstance(build_link[key], collections.Iterable)
-                                and not isinstance(build_link[key], types.StringTypes)):
+                                and not isinstance(build_link[key], string_types)):
                             for item in build_link[key]:
                                 ignore_link = exclude_match(value, item)
                         else:
@@ -159,6 +163,16 @@ def seoify_hyperlink(hyperlink):
     last_slash = hyperlink.rfind('/')
     return re.sub(r' +|-', ' ', hyperlink[last_slash + 1:])
 
+"""
+Python 2/3 compatability
+"""
+
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    string_types = str
+else:
+    string_types = basestring
 
 def iteritems(d):
     """ Factor-out Py2-to-3 differences in dictionary item
@@ -167,3 +181,4 @@ def iteritems(d):
         return d.iteritems()
     except AttributeError:
         return d.items()
+
