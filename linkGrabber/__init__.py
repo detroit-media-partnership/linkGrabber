@@ -3,6 +3,7 @@ import re
 import types
 import collections
 import pprint
+from urlparse import urlparse, urljoin
 
 import requests
 
@@ -64,7 +65,8 @@ class Links(object):
         return self._response
 
     def find(self, limit=None, reverse=False, sort=None,
-             exclude=None, duplicates=True, pretty=False, **filters):
+             exclude=None, duplicates=True, pretty=False,
+             all_same_root=False,  join_domain=False,  **filters):
         """ Using filters and sorts, this finds all hyperlinks
         on a web page
 
@@ -73,29 +75,38 @@ class Links(object):
         :param exclude: Remove links from list
         :param duplicates: Determines if identical URLs should be displayed
         :param pretty: Quick and pretty formatting using pprint
+        :param all_same_root: exclude all links without root domain of it was specified. 
+        :param join_domain: return all href with root domain joined if it starts with '/'
         :param filters: All the links to search for """
-        if exclude is None:
-            exclude = []
 
-        if filters is None:
-            filters = {}
+        exclude = exclude or []
+        filters = filters or {}
+
         search = self._soup.findAll('a', **filters)
 
         if reverse:
             search.reverse()
 
+        urlsvisited = collections.defaultdict(bool)
+        siteinfo = urlparse(self._href)
+
         links = []
         for anchor in search:
             build_link = anchor.attrs
-            try:
-                build_link[u'seo'] = seoify_hyperlink(anchor['href'])
-            except KeyError:
-                pass
 
-            try:
-                build_link[u'text'] = anchor.string or build_link['seo']
-            except KeyError:
-                pass
+            if 'href' in anchor.attrs:
+                anchor['href'] = anchor['href'].strip()
+                if join_domain:
+                    anchor['href'] = urljoin(self._href, anchor['href'])
+                link = urlparse(anchor['href'])
+                if all_same_root and link.netloc != siteinfo.netloc:
+                    continue
+                build_link[u'seo'] = seoify_hyperlink(anchor['href'])
+            elif all_same_root:
+                continue
+
+            if u'seo' in build_link:
+                build_link[u'text'] = anchor.string or build_link[u'seo']
 
             ignore_link = False
             for nixd in exclude:
@@ -109,17 +120,17 @@ class Links(object):
                             ignore_link = exclude_match(value, build_link[key])
 
             if not duplicates:
-                for link in links:
-                    if link['href'] == anchor['href']:
-                        ignore_link = True
+                if anchor.get('href', None):
+                    ignore_link = urlsvisited[anchor['href']]
 
             if not ignore_link:
+                urlsvisited[anchor.get('href', None)] = True
                 links.append(build_link)
 
-            if limit is not None and len(links) == limit:
+            if limit and len(links) == limit:
                 break
 
-        if sort is not None:
+        if sort:
             links = sorted(links, key=sort, reverse=reverse)
 
         if pretty:
