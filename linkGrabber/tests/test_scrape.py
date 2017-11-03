@@ -28,6 +28,9 @@ class TestScrape(unittest.TestCase):
         with vcr.use_cassette(os.path.join(BASE_DIR, 'fixtures', 'vcr_cassettes', 'second_test.yaml')):
             td.pages[1]['text'] = requests.get(td.pages[1]['url']).text
 
+        with vcr.use_cassette(os.path.join(BASE_DIR, 'fixtures', 'vcr_cassettes', 'third_test.yaml')):
+            td.pages[2]['text'] = requests.get(td.pages[2]['url']).text
+
     def assertDictSame(self, expected, actual):
         self.assertEqual(len(list(six.iterkeys(expected))), len(list(six.iterkeys(actual))))
         for ekey, evalue in six.iteritems(expected):
