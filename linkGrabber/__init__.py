@@ -79,7 +79,7 @@ class Links(object):
 
         if filters is None:
             filters = {}
-        search = self._soup.findAll('a', **filters)
+        search = self._soup.findAll('a', href=True, **filters)
 
         if reverse:
             search.reverse()
