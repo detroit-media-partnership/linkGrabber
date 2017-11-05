@@ -77,9 +77,9 @@ class Links(object):
         if exclude is None:
             exclude = []
 
-        if filters is None:
-            filters = {}
-        search = self._soup.findAll('a', href=True, **filters)
+        if 'href' not in filters:
+            filters['href'] = True
+        search = self._soup.findAll('a', **filters)
 
         if reverse:
             search.reverse()
