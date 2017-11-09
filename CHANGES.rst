@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v0.3.1 (11/09/2017)
+-------------------
+
+* :bug: `find` would fail when not providing a `href` property [6](https://github.com/michigan-com/linkGrabber/pull/6) @MohamedHuzien
+
 v.0.3.0 (7/09/2015)
 -------------------
 
